@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Portal | B.Tech AIDS</title>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Stylesheet -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- ==================== HOME / LANDING PAGE VIEW ==================== -->
+    <div id="home-view" class="view-container">
+        <header class="home-header">
+            <div class="logo-area">
+                <i class="fa-solid fa-graduation-cap"></i>
+                <span>CampusConnect Portal</span>
+            </div>
+            <nav class="home-nav">
+                <a href="#home-view" class="active-nav">Home</a>
+                <a href="#" onclick="showLogin()">Student Login</a>
+            </nav>
+        </header>
+
+        <main class="hero-section">
+            <div class="hero-content">
+                <span class="badge">B.Tech AIDS 3rd Sem Project</span>
+                <h1>Student Portal Web Application</h1>
+                <p>Your centralized hub to track attendance, semester marks, daily timetables, and college announcements effortlessly in one place.</p>
+                <button class="primary-btn" onclick="showLogin()">
+                    <i class="fa-solid fa-right-to-bracket"></i> Get Started / Login
+                </button>
+            </div>
+        </main>
+
+        <footer class="home-footer">
+            <p>&copy; 2026 Student Portal Project. Developed for B.Tech CSE (AIDS) 3rd Semester.</p>
+        </footer>
+    </div>
+
+    <!-- ==================== LOGIN VIEW ==================== -->
+    <div id="login-view" class="view-container hidden">
+        <div class="login-wrapper">
+            <div class="card login-card">
+                <div class="login-header">
+                    <i class="fa-solid fa-graduation-cap login-logo-icon"></i>
+                    <h2>Student Portal Login</h2>
+                    <p>Enter your details to access your academic dashboard</p>
+                </div>
+
+                <form id="login-form" onsubmit="handleLogin(event)">
+                    <div class="form-group">
+                        <label for="student-name"><i class="fa-solid fa-user"></i> Full Name</label>
+                        <input type="text" id="student-name" placeholder="e.g. Alex Turner" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="student-id"><i class="fa-solid fa-id-card"></i> Student ID / Roll Number</label>
+                        <input type="text" id="student-id" placeholder="e.g. CSEAIDS2026042" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="student-password"><i class="fa-solid fa-lock"></i> Password</label>
+                        <input type="password" id="student-password" placeholder="Enter password (any for demo)" required>
+                    </div>
+
+                    <div id="login-error" class="login-error hidden"></div>
+
+                    <button type="submit" class="primary-btn login-btn">
+                        <i class="fa-solid fa-arrow-right-to-bracket"></i> Proceed to Dashboard
+                    </button>
+                </form>
+
+                <div class="login-demo-hint">
+                    <p><i class="fa-solid fa-circle-info"></i> <strong>Frontend Project Demo:</strong> Enter any student name, roll number, and password to dynamically populate your dashboard.</p>
+                    <p class="security-warning"><i class="fa-solid fa-shield-halved"></i> Note: This is a 3rd semester frontend project demonstration. Academic data displayed is sample demo data.</p>
+                </div>
+
+                <div class="back-to-home">
+                    <a href="#" onclick="showHome()"><i class="fa-solid fa-arrow-left"></i> Back to Home</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ==================== MAIN PORTAL VIEW ==================== -->
+    <div id="portal-view" class="view-container hidden">
+        <div class="app-layout">
+            
+            <!-- Sidebar Navigation -->
+            <aside class="sidebar" id="sidebar">
+                <div class="sidebar-brand">
+                    <i class="fa-solid fa-graduation-cap"></i>
+                    <h2>EduPortal</h2>
+                </div>
+                <ul class="sidebar-menu">
+                    <li><a href="#" class="menu-link active" data-target="dashboard"><i class="fa-solid fa-house"></i> Dashboard</a></li>
+                    <li><a href="#" class="menu-link" data-target="profile"><i class="fa-solid fa-user"></i> Student Profile</a></li>
+                    <li><a href="#" class="menu-link" data-target="attendance"><i class="fa-solid fa-calendar-check"></i> Attendance</a></li>
+                    <li><a href="#" class="menu-link" data-target="marks"><i class="fa-solid fa-award"></i> Marks & Grades</a></li>
+                    <li><a href="#" class="menu-link" data-target="timetable"><i class="fa-solid fa-clock"></i> Timetable</a></li>
+                    <li><a href="#" class="menu-link" data-target="announcements"><i class="fa-solid fa-bullhorn"></i> Announcements</a></li>
+                    <li class="menu-divider"></li>
+                    <li><a href="#" class="menu-link logout-link" onclick="handleLogout()"><i class="fa-solid fa-arrow-right-from-bracket"></i> Logout</a></li>
+                </ul>
+            </aside>
+
+            <!-- Main Content Wrapper -->
+            <div class="main-wrapper">
+                
+                <!-- Top Navbar -->
+                <header class="top-navbar">
+                    <div class="nav-left">
+                        <button id="sidebar-toggle" class="icon-btn"><i class="fa-solid fa-bars"></i></button>
+                        <h3 id="current-page-title">Dashboard</h3>
+                    </div>
+                    <div class="nav-right">
+                        <div class="user-badge">
+                            <div id="nav-avatar-container" class="avatar-sm initials-avatar">
+                                <span id="nav-initials">ST</span>
+                                <img id="nav-avatar-img" class="hidden" alt="Profile Photo">
+                            </div>
+                            <span class="user-name" id="nav-user-name">Student</span>
+                        </div>
+                    </div>
+                </header>
+
+                <!-- Scrollable Content Area -->
+                <main class="content-body">
+
+                    <!-- 1. DASHBOARD SECTION -->
+                    <section id="section-dashboard" class="portal-section active">
+                        <div class="welcome-banner">
+                            <h2 id="welcome-banner-text">Welcome back! 👋</h2>
+                            <p>Here is your 3rd semester academic summary (Demo Data).</p>
+                        </div>
+
+                        <div class="stats-grid">
+                            <div class="stat-card">
+                                <div class="stat-icon blue"><i class="fa-solid fa-percent"></i></div>
+                                <div class="stat-info">
+                                    <h4>Overall Attendance</h4>
+                                    <h2>83.2%</h2>
+                                    <span class="text-success"><i class="fa-solid fa-circle-check"></i> Safe Zone (&ge;75%)</span>
+                                </div>
+                            </div>
+                            <div class="stat-card">
+                                <div class="stat-icon purple"><i class="fa-solid fa-graduation-cap"></i></div>
+                                <div class="stat-info">
+                                    <h4>Current Semester CGPA</h4>
+                                    <h2>8.8 / 10</h2>
+                                    <span class="text-muted">Academic Performance</span>
+                                </div>
+                            </div>
+                            <div class="stat-card">
+                                <div class="stat-icon orange"><i class="fa-solid fa-book-open"></i></div>
+                                <div class="stat-info">
+                                    <h4>Registered Subjects</h4>
+                                    <h2>6 Subjects</h2>
+                                    <span class="text-muted">B.Tech AIDS (3rd Sem)</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="dashboard-row">
+                            <div class="card quick-announcements">
+                                <div class="card-header">
+                                    <h3><i class="fa-solid fa-bullhorn"></i> Recent Notices</h3>
+                                    <a href="#" onclick="switchSection('announcements')">View All</a>
+                                </div>
+                                <ul class="notice-preview-list" id="dashboard-notice-list">
+                                    <!-- Populated via JavaScript -->
+                                </ul>
+                            </div>
+
+                            <div class="card quick-schedule">
+                                <div class="card-header">
+                                    <h3><i class="fa-solid fa-calendar-day"></i> Today's Schedule</h3>
+                                    <span class="badge-date" id="current-day-label">Monday</span>
+                                </div>
+                                <div class="schedule-item-preview">
+                                    <span class="time">09:30 AM - 11:00 AM</span>
+                                    <h4>Data Structures & Algorithms</h4>
+                                    <p><i class="fa-solid fa-location-dot"></i> Room 302 | Prof. Robert Davis</p>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- 2. STUDENT PROFILE SECTION -->
+                    <section id="section-profile" class="portal-section">
+                        <div class="card profile-card">
+                            <div class="profile-header-bg"></div>
+                            <div class="profile-body">
+                                
+                                <!-- Profile Photo / Initials Container -->
+                                <div class="profile-avatar-wrapper">
+                                    <div id="profile-avatar-container" class="profile-avatar initials-avatar-lg">
+                                        <span id="profile-initials">ST</span>
+                                        <img id="profile-avatar-img" class="hidden" alt="Profile Photo">
+                                    </div>
+                                    <label for="photo-file-input" class="avatar-upload-btn" title="Upload Custom Photo">
+                                        <i class="fa-solid fa-camera"></i>
+                                    </label>
+                                    <input type="file" id="photo-file-input" accept="image/*" class="hidden" onchange="handlePhotoUpload(event)">
+                                </div>
+
+                                <div class="profile-photo-actions">
+                                    <button class="secondary-btn" onclick="triggerFileInput()"><i class="fa-solid fa-upload"></i> Upload Photo</button>
+                                    <button class="secondary-btn danger-text-btn hidden" id="remove-photo-btn" onclick="removePhoto()"><i class="fa-solid fa-trash-can"></i> Remove Photo</button>
+                                </div>
+
+                                <h2 id="profile-name">Student Name</h2>
+                                <p class="text-muted">B.Tech Artificial Intelligence and Data Science (AIDS)</p>
+
+                                <div class="profile-info-grid">
+                                    <div class="info-group">
+                                        <label>Roll Number / Reg ID</label>
+                                        <p id="profile-roll">CSEAIDS000000</p>
+                                    </div>
+                                    <div class="info-group">
+                                        <label>Current Semester</label>
+                                        <p>3rd Semester</p>
+                                    </div>
+                                    <div class="info-group">
+                                        <label>Academic Year</label>
+                                        <p>2026 - 2027</p>
+                                    </div>
+                                    <div class="info-group">
+                                        <label>College Email</label>
+                                        <p id="profile-email">student@campusconnect.edu</p>
+                                    </div>
+                                    <div class="info-group">
+                                        <label>Contact Number</label>
+                                        <p>+91 98765 43210</p>
+                                    </div>
+                                    <div class="info-group">
+                                        <label>Faculty Advisor</label>
+                                        <p>Dr. Eleanor Vance</p>
+                                    </div>
+                                </div>
+
+                                <p class="photo-storage-note">
+                                    <i class="fa-solid fa-circle-info"></i> Custom uploaded photos are processed locally in your browser memory for session demonstration.
+                                </p>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- 3. ATTENDANCE SECTION -->
+                    <section id="section-attendance" class="portal-section">
+                        <div class="section-header-banner">
+                            <h2>Subject-wise Attendance Tracking</h2>
+                            <p>Minimum 75% attendance is mandatory to appear for 3rd Semester End Examinations (Sample Project Data).</p>
+                        </div>
+                        <div class="card table-card">
+                            <div class="table-responsive">
+                                <table class="data-table">
+                                    <thead>
+                                        <tr>
+                                            <th>Subject Code</th>
+                                            <th>Subject Name</th>
+                                            <th>Classes Attended</th>
+                                            <th>Total Classes</th>
+                                            <th>Percentage</th>
+                                            <th>Status</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="attendance-table-body">
+                                        <!-- Populated via JavaScript -->
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- 4. MARKS & GRADES SECTION -->
+                    <section id="section-marks" class="portal-section">
+                        <div class="section-header-banner">
+                            <h2>Internal & End Semester Marks</h2>
+                            <p>Performance breakdown for 3rd semester internal assessments and exams (Sample Project Data).</p>
+                        </div>
+                        <div class="card table-card">
+                            <div class="table-responsive">
+                                <table class="data-table">
+                                    <thead>
+                                        <tr>
+                                            <th>Subject Name</th>
+                                            <th>Mid-Term (30)</th>
+                                            <th>Assignments (20)</th>
+                                            <th>End-Sem (50)</th>
+                                            <th>Total (100)</th>
+                                            <th>Grade</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="marks-table-body">
+                                        <!-- Populated via JavaScript -->
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- 5. TIMETABLE SECTION -->
+                    <section id="section-timetable" class="portal-section">
+                        <div class="section-header-banner">
+                            <h2>Weekly Class Timetable</h2>
+                            <p>Select a day to view your 3rd semester class schedule.</p>
+                        </div>
+                        
+                        <div class="day-tabs" id="day-tabs">
+                            <button class="day-btn active" data-day="Monday">Monday</button>
+                            <button class="day-btn" data-day="Tuesday">Tuesday</button>
+                            <button class="day-btn" data-day="Wednesday">Wednesday</button>
+                            <button class="day-btn" data-day="Thursday">Thursday</button>
+                            <button class="day-btn" data-day="Friday">Friday</button>
+                        </div>
+
+                        <div class="card table-card">
+                            <div class="table-responsive">
+                                <table class="data-table">
+                                    <thead>
+                                        <tr>
+                                            <th>Time Slot</th>
+                                            <th>Subject Name</th>
+                                            <th>Faculty</th>
+                                            <th>Room / Lab</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="timetable-table-body">
+                                        <!-- Populated via JavaScript -->
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- 6. ANNOUNCEMENTS SECTION -->
+                    <section id="section-announcements" class="portal-section">
+                        <div class="section-header-banner">
+                            <h2>College Announcements & Circulars</h2>
+                            <p>Stay updated with official college notices, exam schedules, and events.</p>
+                        </div>
+                        <div class="announcements-grid" id="announcements-grid-container">
+                            <!-- Populated via JavaScript -->
+                        </div>
+                    </section>
+
+                </main>
+
+                <!-- Portal Footer -->
+                <footer class="portal-footer">
+                    <p>Student Portal Web Application &bull; B.Tech AIDS 3rd Semester Project</p>
+                </footer>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- JavaScript File -->
+    <script src="script.js"></script>
+</body>
+</html>
